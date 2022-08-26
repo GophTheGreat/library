@@ -1,8 +1,5 @@
 let myLibrary = [];
 
-function blah(){
-}
-
 function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
@@ -10,10 +7,14 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
-blah.prototype.toggleRead = function() {
+Book.prototype.toggleRead = function() {
   clearTable();
+  let me = this;
   console.log('Toggling read')
   console.log('current this = ' + this)
+  console.log('current title = ' + this.title)
+  console.log('current read = ' + this.read)
+  console.log('current me = ' + me)
   if(this.read == true){
     this.read = false;
     console.log('read was true')
@@ -34,28 +35,25 @@ Book.prototype.isRead = function() {
   return false;
 }
 
-Book.prototype = Object.create(blah.prototype);
-
-// const redwall = new Book("Redwall", "brian jaques", 200, true);
+//making dummy books
+//just trying both ways because why not
+///
 const redwall = new Book;
 redwall.title = "Redwall";
 redwall.author = "Brian Jaques";
 redwall.pages = 200;
 redwall.read = true;
-
-console.log(redwall);
-//console.log(redwall.isRead());
-
+///
 const icefire = new Book("Icefire", "fireman", 250, false);
 const stormThief = new Book ("Storm Thief", "Wooding", 100, true);
-
+///
 
 function addBookToLibrary(Book) {
   myLibrary.push(Book);
 };
 
 addBookToLibrary(redwall);
-//addBookToLibrary(stormThief);
+addBookToLibrary(stormThief);
 
 function printLibrary(){
   myLibrary.forEach(function(Book) {
@@ -76,21 +74,26 @@ function clearTable(){
   }
 }
 
-console.log('Hi')
-console.log(myLibrary)
 
 function printTable(){
-  console.log(table);
+  //print a row with cells for each book
   for(const Book of myLibrary){
     let row = table.insertRow();
     for(let i = 0; i < 4; i++){
       let cell = row.insertCell();
       cell.innerHTML = Object.values(Book)[i];
     };
+
+    //also place a "Toggle Read" button
     let btn = document.createElement("button")
     btn.innerHTML = "Toggle Read";
-    //console.log(eh.toggleRead);
-    btn.addEventListener("click", Book.toggleRead);
+    //remember that addEvenListener auto-binds "this" (our button)
+    //to the function
+    //so this line below won't work
+    //btn.addEventListener("click", Book.toggleRead);
+
+    //wrapping the function lets us use the object's function proper
+    btn.addEventListener("click", function() {Book.toggleRead();});
     let cell = row.insertCell();
     cell.appendChild(btn);
   }
@@ -111,7 +114,6 @@ let d = document.getElementById('readin').checked;
     clearTable();
   };
   printTable();
-  console.log('hi');
 }
 
 
@@ -120,3 +122,4 @@ document.getElementById('submit').addEventListener("click", addBookAndPrint);
 
 
 printTable();
+console.log(redwall)
