@@ -77,27 +77,52 @@ function clearTable(){
 
 function printTable(){
   //print a row with cells for each book
+  let bookID = 0;
   for(const Book of myLibrary){
     let row = table.insertRow();
     for(let i = 0; i < 4; i++){
       let cell = row.insertCell();
       cell.innerHTML = Object.values(Book)[i];
     };
-
     //also place a "Toggle Read" button
-    let btn = document.createElement("button")
-    btn.innerHTML = "Toggle Read";
-    //remember that addEvenListener auto-binds "this" (our button)
-    //to the function
-    //so this line below won't work
-    //btn.addEventListener("click", Book.toggleRead);
-
-    //wrapping the function lets us use the object's function proper
-    btn.addEventListener("click", function() {Book.toggleRead();});
-    let cell = row.insertCell();
-    cell.appendChild(btn);
+    placeToggleReadButton(Book, row);
+    //also also place "Delete" Button
+    placeDeleteButton(bookID, row);
+    bookID++;
   }
 }
+
+function placeToggleReadButton(Book, row){
+  let btn = document.createElement("button")
+  btn.innerHTML = "Toggle Read";
+  //remember that addEvenListener auto-binds "this" (our button)
+  //to the function
+  //so this line below won't work
+  //btn.addEventListener("click", Book.toggleRead);
+
+  //wrapping the function lets us use the object's function proper
+  btn.addEventListener("click", function() {Book.toggleRead();});
+  let cell = row.insertCell();
+  cell.appendChild(btn);
+}
+
+function placeDeleteButton(bookID, row){
+  let btn = document.createElement("button")
+  btn.innerHTML = "Delete Book";
+  btn.addEventListener("click", function() {deleteBook(bookID)});
+  let cell = row.insertCell();
+  cell.appendChild(btn);
+}
+
+function deleteBook(bookID){
+  clearTable();
+  console.log(bookID);
+  console.log("deleting " + myLibrary[bookID]);
+  myLibrary.splice(bookID, 1);
+  console.log(myLibrary);
+  printTable();
+}
+
 
 function addBookAndPrint (){
 
