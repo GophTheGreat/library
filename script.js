@@ -1,10 +1,13 @@
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
+class Book{
+  constructor(title, author, pages, read){
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
+
 }
 
 Book.prototype.toggleRead = function() {
@@ -92,6 +95,23 @@ function printTable(){
   }
 }
 
+
+function addBookAndPrint(){
+let a = document.getElementById('titlein').value;
+let b = document.getElementById('authorin').value;
+let c = document.getElementById('pagein').value;
+let d = document.getElementById('readin').checked;
+  console.log(a);
+  console.log(b);
+  console.log(c);
+  console.log(d);
+  addBookToLibrary(new Book(a, b, c, d));
+  if(table.rows.length > 1){
+    clearTable();
+  };
+  printTable();
+}
+
 function placeToggleReadButton(Book, row){
   let btn = document.createElement("button")
   btn.innerHTML = "Toggle Read";
@@ -123,9 +143,7 @@ function deleteBook(bookID){
   printTable();
 }
 
-
-function addBookAndPrint (){
-
+function addBookAndPrint(){
 let a = document.getElementById('titlein').value;
 let b = document.getElementById('authorin').value;
 let c = document.getElementById('pagein').value;
