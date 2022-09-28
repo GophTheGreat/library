@@ -1,10 +1,13 @@
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
+class Book{
+  constructor(title, author, pages, read){
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
+
 }
 
 Book.prototype.toggleRead = function() {
@@ -99,7 +102,7 @@ function printTable(){
   }
 }
 
-function addBookAndPrint (){
+function addBookAndPrint(){
 
 let a = document.getElementById('titlein').value;
 let b = document.getElementById('authorin').value;
