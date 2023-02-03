@@ -144,19 +144,22 @@ function deleteBook(bookID){
 }
 
 function addBookAndPrint(){
-let a = document.getElementById('titlein').value;
-let b = document.getElementById('authorin').value;
-let c = document.getElementById('pagein').value;
-let d = document.getElementById('readin').checked;
-  console.log(a);
-  console.log(b);
-  console.log(c);
-  console.log(d);
-  addBookToLibrary(new Book(a, b, c, d));
-  if(table.rows.length > 1){
-    clearTable();
-  };
-  printTable();
+  const form = document.getElementById('bookform');
+  if(form.checkValidity()){
+    let a = document.getElementById('titlein').value;
+    let b = document.getElementById('authorin').value;
+    let c = document.getElementById('pagein').value;
+    let d = document.getElementById('readin').checked;
+    console.log(a);
+    console.log(b);
+    console.log(c);
+    console.log(d);
+    addBookToLibrary(new Book(a, b, c, d));
+    if(table.rows.length > 1){
+      clearTable();
+    };
+    printTable();
+  }
 }
 
 
